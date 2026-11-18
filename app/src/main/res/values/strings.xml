@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">SearchApp</string>
+
+    <string name="search_title">Buscar música</string>
+    <string name="search_label">Canción, artista o álbum</string>
+    <string name="search_clear">Borrar búsqueda</string>
+    <string name="search_idle">Escribe para buscar canciones.</string>
+    <string name="search_loading">Buscando…</string>
+    <string name="search_empty">No hay resultados para «%1$s».</string>
+    <string name="search_error">No se pudo completar la búsqueda. Comprueba tu conexión e inténtalo de nuevo.</string>
+
+    <string name="detail_title">Detalle</string>
+    <string name="back">Volver</string>
+    <string name="detail_artwork">Carátula de %1$s</string>
+    <string name="detail_artist">Artista</string>
+    <string name="detail_album">Álbum</string>
+    <string name="detail_genre">Género</string>
+    <string name="detail_release_date">Fecha de lanzamiento</string>
+    <string name="detail_duration">Duración</string>
+    <string name="detail_not_found">No se encontró la canción.</string>
+</resources>

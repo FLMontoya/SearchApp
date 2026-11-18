@@ -1,0 +1,4 @@
+<resources>
+    <!-- Window theme only; all UI is Compose (see SearchAppTheme). -->
+    <style name="Theme.SearchApp" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
