@@ -66,6 +66,13 @@ class SearchRepositoryImplTest {
     }
 
     @Test
+    fun `duplicate track ids are removed`() = runTest {
+        api.results = listOf(dto(1), dto(1), dto(2))
+
+        assertEquals(listOf(1L, 2L), repository.search("jack").map { it.id })
+    }
+
+    @Test
     fun `a different query is a miss`() = runTest {
         repository.search("jack")
         repository.search("johnson")

@@ -32,6 +32,8 @@ class SearchViewModel(
     fun onSearch() = search(_query.value, 0)
 
     // Cancelling the previous job guarantees a stale response never reaches the UI.
+    // Loading is set before the debounce so results of the previous query are never
+    // shown next to the new text.
     private fun search(text: String, delayMillis: Long) {
         searchJob?.cancel()
         if (text.isBlank()) {
@@ -39,8 +41,8 @@ class SearchViewModel(
             return
         }
         searchJob = viewModelScope.launch {
-            delay(delayMillis)
             _uiState.value = SearchUiState.Loading
+            delay(delayMillis)
             _uiState.value = try {
                 val tracks = searchTracks(text)
                 if (tracks.isEmpty()) SearchUiState.Empty else SearchUiState.Success(tracks)

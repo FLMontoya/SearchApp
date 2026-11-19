@@ -20,7 +20,8 @@ class SearchRepositoryImpl(
         val key = term.lowercase()
         cache.get(key)?.let { return it }
 
-        val tracks = api.search(term).results.mapNotNull { it.toDomain() }
+        // The UI uses the id as the LazyColumn key, which must be unique.
+        val tracks = api.search(term).results.mapNotNull { it.toDomain() }.distinctBy { it.id }
         cache.put(key, tracks)
         tracks.forEach { tracksById[it.id] = it }
         return tracks

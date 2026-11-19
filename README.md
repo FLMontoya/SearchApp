@@ -32,7 +32,7 @@ Con una entrada válida no hay llamada de red; si expiró, se llama a la red y s
 Los errores de red no se cachean. El reloj es una interfaz (`Clock`) inyectable y monotónico, por lo que la expiración se testea sin esperas.
 El detalle resuelve la canción por id a partir de los resultados ya descargados (sin llamada extra), aunque la query ya haya expirado.
 
-**Cancelación.** El `SearchViewModel` mantiene un único `Job` de búsqueda: cada cambio de texto lo cancela y lanza otro tras un debounce de 400 ms
+**Cancelación.** El `SearchViewModel` mantiene un único `Job` de búsqueda: cada cambio de texto lo cancela, pasa a *Cargando* de inmediato (así nunca se ven resultados de la búsqueda anterior junto al texto nuevo) y lanza otro tras un debounce de 400 ms
 (la acción *Buscar* del teclado lo salta). Una respuesta de una búsqueda cancelada no puede llegar a la UI.
 Las `CancellationException` nunca se capturan sin relanzarlas.
 
@@ -119,5 +119,5 @@ Alcance de estas pruebas:
 ## Tests
 
 - Domain: caso de uso con un repositorio fake.
-- Data: caché del repositorio (hit, miss, expiración y límite del TTL, errores no cacheados) y parseo de la respuesta con MockWebServer.
-- ViewModel: debounce, estados, y cancelación de búsquedas anteriores.
+- Data: la caché por separado (TTL, reinicio al reescribir, claves independientes), el repositorio (hit, miss, expiración y límite del TTL, errores no cacheados, ids duplicados) y el parseo de la respuesta con MockWebServer.
+- ViewModel: debounce, estados, cancelación de búsquedas anteriores y que se pase a *Cargando* al editar el texto; y el `DetailViewModel` (cargado y no encontrado).

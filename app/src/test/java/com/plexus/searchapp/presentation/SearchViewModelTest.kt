@@ -59,10 +59,24 @@ class SearchViewModelTest {
         viewModel.onQueryChange("jack")
         advanceTimeBy(debounce - 1)
         runCurrent()
-        assertEquals(SearchUiState.Idle, viewModel.uiState.value)
+        assertEquals(SearchUiState.Loading, viewModel.uiState.value)
+        assertEquals(emptyList<String>(), repository.searchedTerms)
 
         pastDebounce()
         assertEquals(SearchUiState.Success(results), viewModel.uiState.value)
+    }
+
+    @Test
+    fun `editing the text replaces previous results with loading right away`() = runTest {
+        repository.onSearch = { listOf(track(1)) }
+        viewModel.onQueryChange("jack")
+        pastDebounce()
+        assertEquals(SearchUiState.Success(listOf(track(1))), viewModel.uiState.value)
+
+        viewModel.onQueryChange("jack j")
+        runCurrent()
+
+        assertEquals(SearchUiState.Loading, viewModel.uiState.value)
     }
 
     @Test

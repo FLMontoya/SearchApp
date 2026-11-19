@@ -29,7 +29,8 @@ fun AppNavGraph(container: AppContainer) {
             )
             SearchScreen(
                 viewModel = viewModel,
-                onTrackClick = { id -> navController.navigate("detail/$id") },
+                // singleTop: a double tap must not stack two detail screens.
+                onTrackClick = { id -> navController.navigate("detail/$id") { launchSingleTop = true } },
             )
         }
         composable(
